@@ -44,6 +44,7 @@ public class VentanaPrincipal {
 		ventana = new JFrame();
 		ventana.setBounds(100, 100, 700, 500);
 		ventana.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		ventana.setTitle("Busca Minas");
 		juego = new ControlJuego();
 	}
 	
@@ -139,7 +140,28 @@ public class VentanaPrincipal {
 	 * Método que inicializa todos los lísteners que necesita inicialmente el programa
 	 */
 	public void inicializarListeners(){
-		//TODO
+		botonEmpezar.addActionListener(new ActionListener() {
+			
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				juego=new ControlJuego();
+				actualizarPuntuacion();
+				for (int i = 0; i < botonesJuego.length; i++) {
+					for (int j = 0; j < botonesJuego.length; j++) {
+						panelesJuego[i][j].removeAll();
+						panelesJuego[i][j].add(botonesJuego[i][j]);
+					}
+				}
+				refrescarPantalla();
+				
+			}
+		});
+	
+		for (int i = 0; i < botonesJuego.length; i++) {
+			for (int j = 0; j < botonesJuego[i].length; j++) {
+				botonesJuego[i][j].addActionListener(new ActionBoton(i, j, juego, this));
+			}
+		}
 	}
 	
 	
@@ -156,7 +178,8 @@ public class VentanaPrincipal {
 	 * @param j: posición horizontal de la celda.
 	 */
 	public void mostrarNumMinasAlrededor(int i , int j) {
-		//TODO
+		panelesJuego[i][j].removeAll();
+		panelesJuego[i][j].add(new JLabel(""+juego.getMinasAlrededor(i, j)));
 	}
 	
 	
@@ -166,14 +189,18 @@ public class VentanaPrincipal {
 	 * @post : Todos los botones se desactivan excepto el de volver a iniciar el juego.
 	 */
 	public void mostrarFinJuego(boolean porExplosion) {
-		//TODO
+		if(porExplosion) {
+			JOptionPane.showMessageDialog(ventana, "HAS PERDIDO\nHa explotado una mina\nPuntuacion: "+juego.getPuntuacion(), "Has Perdido", JOptionPane.ERROR_MESSAGE);
+		}else {
+			JOptionPane.showMessageDialog(ventana, "HAS GANADO\nHas completado todas las casillas\nPuntuacion: "+juego.getPuntuacion(), "Has Ganado", JOptionPane.PLAIN_MESSAGE);
+		}
 	}
 
 	/**
 	 * Método que muestra la puntuación por pantalla.
 	 */
 	public void actualizarPuntuacion() {
-		//TODO
+		pantallaPuntuacion.setText(""+juego.getPuntuacion());
 	}
 	
 	/**

@@ -1,4 +1,3 @@
-import java.util.ArrayList;
 import java.util.Random;
 
 /**
@@ -22,8 +21,8 @@ public class ControlJuego {
 	public ControlJuego() {
 		// Creamos el tablero:
 		tablero = new int[LADO_TABLERO][LADO_TABLERO];
-
 		// Inicializamos una nueva partida
+	
 		inicializarPartida();
 	}
 
@@ -36,8 +35,8 @@ public class ControlJuego {
 	 *        minas guardan en el entero cuántas minas hay alrededor de la celda
 	 */
 	public void inicializarPartida() {
+		puntuacion=0;
 		Random rd = new Random();
-		
 		/**
 		 * Pintamos las minas en el tablero
 		 */
@@ -45,13 +44,11 @@ public class ControlJuego {
 		for (int i = 0; i < MINAS_INICIALES; i++) {
 			x=rd.nextInt(LADO_TABLERO); 
 			y=rd.nextInt(LADO_TABLERO);
-			
 			if(tablero[x][y]!=MINA) {
 				tablero[x][y] = MINA;
 			}else {
 				i--;
 			}
-			
 		}
 		/**
 		 * Recorremos el tablero para calcular las minas adjuntas
@@ -62,7 +59,7 @@ public class ControlJuego {
 				 * Si la posici�n no es una mina Se le asigna el valor de las minas alrededor
 				 */
 				if (tablero[i][j] != MINA) {
-					tablero[i][j] = calculaNormal(i, j);
+					tablero[i][j] = calculoMinasAdjuntas(i, j);
 				}
 			}
 		}
@@ -81,18 +78,6 @@ public class ControlJuego {
 	 * @return : El número de minas que hay alrededor de la casilla [i][j]
 	 **/
 	private int calculoMinasAdjuntas(int i, int j) {
-		int minasAlrededor = 0;
-		minasAlrededor=calculaNormal(i, j);
-		return minasAlrededor;
-	}
-	
-	/**
-	 * Calcula las minimas para una posicion que no sea lateral
-	 * @param i
-	 * @param j
-	 * @return
-	 */
-	private int calculaNormal(int i, int j) {
 		int minasAlrededor=0;
 		try {
 		if(tablero[i-1][j-1]==-1) {
@@ -138,6 +123,8 @@ public class ControlJuego {
 		
 		return minasAlrededor;
 	}
+	
+	
 
 	/**
 	 * M�todo que nos permite
@@ -151,7 +138,12 @@ public class ControlJuego {
 	 * @return : Verdadero si no ha explotado una mina. Falso en caso contrario.
 	 */
 	public boolean abrirCasilla(int i, int j) {
-
+		if(tablero[i][j]==MINA) {
+			return false;
+		}else {
+			puntuacion++;
+			return true;
+		}
 	}
 
 	/**
@@ -162,6 +154,9 @@ public class ControlJuego {
 	 *         minas.
 	 **/
 	public boolean esFinJuego() {
+		int totalCasillas=LADO_TABLERO*LADO_TABLERO;
+		int casillasNormales=totalCasillas-MINAS_INICIALES;
+		return puntuacion==totalCasillas-casillasNormales;
 	}
 
 	/**
@@ -191,6 +186,8 @@ public class ControlJuego {
 	 * @return Un entero que representa el número de minas alrededor de la celda
 	 */
 	public int getMinasAlrededor(int i, int j) {
+		System.out.println("tablero ij "+tablero[i][j]);
+		return tablero[i][j];
 	}
 
 	/**
@@ -199,6 +196,7 @@ public class ControlJuego {
 	 * @return Un entero con la puntuación actual
 	 */
 	public int getPuntuacion() {
+		return puntuacion;
 	}
 
 }
