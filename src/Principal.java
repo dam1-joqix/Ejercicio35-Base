@@ -12,7 +12,7 @@ public class Principal {
 	 * @param args : Cadenas de parámetros del main
 	 */
 	public static void main(String[] args) {
-		EventQueue.invokeLater(new Runnable() {
+		/*EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				try {
 					VentanaPrincipal ventana = new VentanaPrincipal();
@@ -21,7 +21,9 @@ public class Principal {
 					e.printStackTrace();
 				}
 			}
-		});
+		});*/
+		ControlJuego cj=new ControlJuego();
+		cj.depurarTablero();
 	}
 
 }
