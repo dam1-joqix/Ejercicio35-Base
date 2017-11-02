@@ -62,7 +62,7 @@ public class ControlJuego {
 				 * Si la posición no es una mina Se le asigna el valor de las minas alrededor
 				 */
 				if (tablero[i][j] != MINA) {
-					tablero[i][j] = calculoMinasAdjuntas(i, j);
+					tablero[i][j] = calculaNormal(i, j);
 				}
 			}
 		}
@@ -82,186 +82,60 @@ public class ControlJuego {
 	 **/
 	private int calculoMinasAdjuntas(int i, int j) {
 		int minasAlrededor = 0;
-		if (i == 0) {
-			// esta a la izquierda
-			if (j == 0) {
-				// aqui estaria en a esquina superior izquierda2
-				minasAlrededor=calculaSupIzq(i,j);
-			} else {
-				if (j == LADO_TABLERO - 1) {
-					// esquina inferior izquierda3
-					minasAlrededor=calculaInfIzq(i,j);
-				} else {
-					// j no es ni arriba ni abajo1
-					minasAlrededor=calculaLadoIzq(i,j);
-				}
-			}
-		} else {
-			if (i == LADO_TABLERO - 1) {
-				// esta a la derecha
-				if (j == 0) {
-					// aqui estaria en la esquina superior derecha4
-					minasAlrededor=calculaSupDer(i,j);
-				} else {
-					if (j == LADO_TABLERO - 1) {
-						// esquina inferior derecha5
-						minasAlrededor=calculaInfDer(i,j);
-					} else {
-						// j no es ni arriba ni abajo6
-						minasAlrededor=calculaDer(i,j);
-					}
-				}
-			} else {
-				// ni izquierda ni derecha
-				if(j==0) {
-					//esta arriba7
-					minasAlrededor=calculaArriba(i,j);
-				}else {
-					if(j==LADO_TABLERO-1) {
-						//esta abajo8
-						minasAlrededor=calculaAbajo(i,j);
-					}else {
-						//ni arriba ni abajo ni izquierda ni derecha10
-						minasAlrededor=calculaNormal(i,j);
-					}
-				}
-			}
-		}
+		minasAlrededor=calculaNormal(i, j);
 		return minasAlrededor;
 	}
-
-	private int calculaSupIzq(int i, int j) {
-		int minasAlrededor=0;
-		if(tablero[i+1][j]==-1) {
-			minasAlrededor++;
-		}if(tablero[i][j+1]==-1) {
-			minasAlrededor++;
-		}if(tablero[i+1][j+1]==-1) {
-			minasAlrededor++;
-		}
-		return minasAlrededor;
-	}
-
-	private int calculaInfIzq(int i, int j) {
-		int minasAlrededor=0;
-		if(tablero[i][j-1]==-1) {
-			minasAlrededor++;
-		}if(tablero[i+1][j-1]==-1) {
-			minasAlrededor++;
-		}if(tablero[i+1][j]==-1) {
-			minasAlrededor++;
-		}
-		return minasAlrededor;
-	}
-
-	private int calculaLadoIzq(int i, int j) {
-		int minasAlrededor=0;
-		if(tablero[i][j-1]==-1) {
-			minasAlrededor++;
-		}if(tablero[i+1][j-1]==-1) {
-			minasAlrededor++;
-		}if(tablero[i+1][j]==-1) {
-			minasAlrededor++;
-		}if(tablero[i][j+1]==-1) {
-			minasAlrededor++;
-		}if(tablero[i+1][j+1]==-1) {
-			minasAlrededor++;
-		}
-		return minasAlrededor;
-	}
-
-	private int calculaSupDer(int i, int j) {
-		int minasAlrededor=0;
-		if(tablero[i-1][j]==-1) {
-			minasAlrededor++;
-		}if(tablero[i-1][j+1]==-1) {
-			minasAlrededor++;
-		}if(tablero[i][j+1]==-1) {
-			minasAlrededor++;
-		}
-		return minasAlrededor;
-	}
-
-	private int calculaInfDer(int i, int j) {
-		int minasAlrededor=0;
-		if(tablero[i-1][j-1]==-1) {
-			minasAlrededor++;
-		}if(tablero[i][j-1]==-1) {
-			minasAlrededor++;
-		}if(tablero[i-1][j]==-1) {
-			minasAlrededor++;
-		}
-		return minasAlrededor;
-	}
-
-	private int calculaDer(int i, int j) {
-		int minasAlrededor=0;
-		if(tablero[i-1][j-1]==-1) {
-			minasAlrededor++;
-		}if(tablero[i][j-1]==-1) {
-			minasAlrededor++;
-		}if(tablero[i-1][j]==-1) {
-			minasAlrededor++;
-		}if(tablero[i-1][j+1]==-1) {
-			minasAlrededor++;
-		}if(tablero[i][j+1]==-1) {
-			minasAlrededor++;
-		}
-		return minasAlrededor;
-	}
-
-	private int calculaArriba(int i, int j) {
-		int minasAlrededor=0;
-		if(tablero[i-1][j]==-1) {
-			minasAlrededor++;
-		}if(tablero[i+1][j]==-1) {
-			minasAlrededor++;
-		}if(tablero[i-1][j+1]==-1) {
-			minasAlrededor++;
-		}if(tablero[i][j+1]==-1) {
-			minasAlrededor++;
-		}if(tablero[i+1][j+1]==-1) {
-			minasAlrededor++;
-		}
-		return minasAlrededor;
-	}
-
-	private int calculaAbajo(int i, int j) {
-		int minasAlrededor=0;
-		if(tablero[i-1][j-1]==-1) {
-			minasAlrededor++;
-		}if(tablero[i][j-1]==-1) {
-			minasAlrededor++;
-		}if(tablero[i+1][j-1]==-1) {
-			minasAlrededor++;
-		}if(tablero[i-1][j]==-1) {
-			minasAlrededor++;
-		}if(tablero[i+1][j]==-1) {
-			minasAlrededor++;
-		}
-		
-		return 0;
-	}
-
+	
+	/**
+	 * Calcula las minimas para una posicion que no sea lateral
+	 * @param i
+	 * @param j
+	 * @return
+	 */
 	private int calculaNormal(int i, int j) {
 		int minasAlrededor=0;
+		try {
 		if(tablero[i-1][j-1]==-1) {
 			minasAlrededor++;
-		}if(tablero[i][j-1]==-1) {
-			minasAlrededor++;
-		}if(tablero[i+1][j-1]==-1) {
-			minasAlrededor++;
-		}if(tablero[i-1][j]==-1) {
-			minasAlrededor++;
-		}if(tablero[i+1][j]==-1) {
-			minasAlrededor++;
-		}if(tablero[i-1][j+1]==-1) {
-			minasAlrededor++;
-		}if(tablero[i][j+1]==-1) {
-			minasAlrededor++;
-		}if(tablero[i+1][j+1]==-1) {
+		}
+		}catch(Exception e) {}
+		try {
+		if(tablero[i][j-1]==-1) {
 			minasAlrededor++;
 		}
+		}catch(Exception e) {}
+		try {
+			if(tablero[i+1][j-1]==-1) {
+				minasAlrededor++;
+			}
+		}catch(Exception e) {}
+		try {
+			if(tablero[i-1][j]==-1) {
+				minasAlrededor++;
+		}
+		}catch(Exception e) {}
+		try {
+			if(tablero[i+1][j]==-1) {
+			minasAlrededor++;
+			}
+		}catch(Exception e) {}
+		try {
+			if(tablero[i-1][j+1]==-1) {
+			minasAlrededor++;
+		}
+		}catch(Exception e) {}
+		try {
+			if(tablero[i][j+1]==-1) {
+			minasAlrededor++;
+		}
+		}catch(Exception e) {}
+		try{
+			if(tablero[i+1][j+1]==-1) {
+		
+			minasAlrededor++;
+			}
+			}catch(Exception e) {}
+		
 		return minasAlrededor;
 	}
 
