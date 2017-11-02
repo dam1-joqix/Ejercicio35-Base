@@ -22,8 +22,8 @@ public class Principal {
 				}
 			}
 		});
-		ControlJuego cj=new ControlJuego();
-		cj.depurarTablero();
+		
+		
 	}
 
 }
