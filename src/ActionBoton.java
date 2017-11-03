@@ -14,6 +14,9 @@ public class ActionBoton implements ActionListener{
 	private int j;
 	private ControlJuego juego;
 	private VentanaPrincipal ventana;
+	private int pulsadas;
+	public static int PULSACIONES_MAX=(ControlJuego.LADO_TABLERO*ControlJuego.LADO_TABLERO)-ControlJuego.MINAS_INICIALES;
+	
 	
 
 	public ActionBoton(int i, int j, ControlJuego juego,VentanaPrincipal ventana) {
@@ -21,6 +24,7 @@ public class ActionBoton implements ActionListener{
 		this.j=j;
 		this.juego=juego;
 		this.ventana=ventana;
+		this.pulsadas=0;
 	}
 	
 	/**
@@ -29,12 +33,14 @@ public class ActionBoton implements ActionListener{
 	@Override
 	public void actionPerformed(ActionEvent e) {
 		if(juego.abrirCasilla(i, j)) {
-			System.out.println(i+" "+j);
 			//se abre
 			ventana.mostrarNumMinasAlrededor(i, j);
 			ventana.actualizarPuntuacion();
 			ventana.refrescarPantalla();
-			juego.depurarTablero();
+			if(pulsadas==PULSACIONES_MAX) {
+				ventana.mostrarFinJuego(false);
+			}
+			
 		}else {
 			ventana.mostrarFinJuego(true);
 		}

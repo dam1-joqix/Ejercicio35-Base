@@ -12,8 +12,8 @@ import java.util.Random;
 public class ControlJuego {
 
 	private final static int MINA = -1;
-	final int MINAS_INICIALES = 20;
-	final int LADO_TABLERO = 10;
+	final static int MINAS_INICIALES = 20;
+	final static int LADO_TABLERO = 10;
 
 	private int[][] tablero;
 	private int puntuacion;

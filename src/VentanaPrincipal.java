@@ -1,4 +1,5 @@
 import java.awt.Color;
+import java.awt.EventQueue;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.GridLayout;
@@ -43,6 +44,13 @@ public class VentanaPrincipal {
 	public VentanaPrincipal() {
 		ventana = new JFrame();
 		ventana.setBounds(100, 100, 700, 500);
+		ventana.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		ventana.setTitle("Busca Minas");
+		juego = new ControlJuego();
+	}
+	public VentanaPrincipal(int x,int y) {
+		ventana = new JFrame();
+		ventana.setBounds(x, y, 700, 500);
 		ventana.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		ventana.setTitle("Busca Minas");
 		juego = new ControlJuego();
@@ -144,7 +152,7 @@ public class VentanaPrincipal {
 			
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				juego=new ControlJuego();
+				/*juego=new ControlJuego();
 				actualizarPuntuacion();
 				for (int i = 0; i < botonesJuego.length; i++) {
 					for (int j = 0; j < botonesJuego.length; j++) {
@@ -152,8 +160,21 @@ public class VentanaPrincipal {
 						panelesJuego[i][j].add(botonesJuego[i][j]);
 					}
 				}
-				refrescarPantalla();
-				
+				refrescarPantalla();*/
+				int x= ventana.getX();
+				int y=ventana.getY();
+				EventQueue.invokeLater(new Runnable() {
+					public void run() {
+						try {
+							VentanaPrincipal ventana1 = new VentanaPrincipal(x,y);
+							ventana1.inicializar();
+						} catch (Exception e) {
+							e.printStackTrace();
+						}
+					}
+				});
+			
+				ventana.dispose();
 			}
 		});
 	
@@ -179,7 +200,9 @@ public class VentanaPrincipal {
 	 */
 	public void mostrarNumMinasAlrededor(int i , int j) {
 		panelesJuego[i][j].removeAll();
-		panelesJuego[i][j].add(new JLabel(""+juego.getMinasAlrededor(i, j)));
+		JLabel jl = new JLabel(""+juego.getMinasAlrededor(i, j));
+		jl.setForeground(correspondenciaColores[juego.getMinasAlrededor(i, j)]);
+		panelesJuego[i][j].add(jl);
 	}
 	
 	
@@ -226,7 +249,8 @@ public class VentanaPrincipal {
 		//IMPORTANTE, PRIMERO HACEMOS LA VENTANA VISIBLE Y LUEGO INICIALIZAMOS LOS COMPONENTES.
 		ventana.setVisible(true);
 		inicializarComponentes();	
-		inicializarListeners();		
+		inicializarListeners();
+		juego.depurarTablero();
 	}
 
 
