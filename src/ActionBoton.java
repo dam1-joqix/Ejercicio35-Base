@@ -1,5 +1,9 @@
+import java.awt.Color;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+
+import javax.swing.BorderFactory;
+import javax.swing.JLabel;
 
 /**
  * Clase que implementa el listener de los botones del Buscaminas.
@@ -14,8 +18,7 @@ public class ActionBoton implements ActionListener{
 	private int j;
 	private ControlJuego juego;
 	private VentanaPrincipal ventana;
-	private int pulsadas;
-	public static int PULSACIONES_MAX=(ControlJuego.LADO_TABLERO*ControlJuego.LADO_TABLERO)-ControlJuego.MINAS_INICIALES;
+	
 	
 	
 
@@ -24,7 +27,7 @@ public class ActionBoton implements ActionListener{
 		this.j=j;
 		this.juego=juego;
 		this.ventana=ventana;
-		this.pulsadas=0;
+		
 	}
 	
 	/**
@@ -32,17 +35,27 @@ public class ActionBoton implements ActionListener{
 	 */
 	@Override
 	public void actionPerformed(ActionEvent e) {
+		//si se puede abrir la casilla no es una mina
 		if(juego.abrirCasilla(i, j)) {
 			//se abre
 			ventana.mostrarNumMinasAlrededor(i, j);
 			ventana.actualizarPuntuacion();
 			ventana.refrescarPantalla();
-			if(pulsadas==PULSACIONES_MAX) {
+			if(juego.getPuntuacion()==((juego.LADO_TABLERO*juego.LADO_TABLERO)-juego.MINAS_INICIALES)) {
+				//si la puntuacion es igual a el numero de casillas menos las minas 
+				//ha acabado el juego
 				ventana.mostrarFinJuego(false);
+				ventana.desactivaBotones();
 			}
 			
 		}else {
+			//si no se puede abrir ha explotado una mina y acabará el juego
 			ventana.mostrarFinJuego(true);
+			ventana.panelesJuego[i][j].removeAll();
+			
+			
+			
+			ventana.desactivaBotones();
 		}
 	}
 

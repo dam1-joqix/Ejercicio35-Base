@@ -1,3 +1,4 @@
+import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.EventQueue;
 import java.awt.GridBagConstraints;
@@ -23,7 +24,7 @@ public class VentanaPrincipal {
 	JPanel panelEmpezar;
 	JPanel panelPuntuacion;
 	JPanel panelJuego;
-	
+	int intentos=1;
 	//Todos los botones se meten en un panel independiente.
 	//Hacemos esto para que podamos cambiar despu√©s los componentes por otros
 	JPanel [][] panelesJuego;
@@ -48,7 +49,15 @@ public class VentanaPrincipal {
 		ventana.setTitle("Busca Minas");
 		juego = new ControlJuego();
 	}
-	public VentanaPrincipal(int x,int y) {
+	/**
+	 * Este constructor se utilizar· al pulsar el boton go
+	 * Crea una ventana en la posiciÛn en la que estaba la anterior
+	 * @param x posicion horizontal de la ventana
+	 * @param y posicion vertical de la ventana
+	 * @param intentos numero de veces que se ha pulsado el boton
+	 */
+	public VentanaPrincipal(int x,int y, int intentos) {
+		this.intentos=intentos;
 		ventana = new JFrame();
 		ventana.setBounds(x, y, 700, 500);
 		ventana.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -148,25 +157,20 @@ public class VentanaPrincipal {
 	 * M√©todo que inicializa todos los l√≠steners que necesita inicialmente el programa
 	 */
 	public void inicializarListeners(){
+		/**
+		 * Al pulsar el boton empezar se crea otra vntana en la posicion de la anterior y se destruye la anterior
+		 */
 		botonEmpezar.addActionListener(new ActionListener() {
 			
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				/*juego=new ControlJuego();
-				actualizarPuntuacion();
-				for (int i = 0; i < botonesJuego.length; i++) {
-					for (int j = 0; j < botonesJuego.length; j++) {
-						panelesJuego[i][j].removeAll();
-						panelesJuego[i][j].add(botonesJuego[i][j]);
-					}
-				}
-				refrescarPantalla();*/
+				intentos++;
 				int x= ventana.getX();
 				int y=ventana.getY();
 				EventQueue.invokeLater(new Runnable() {
 					public void run() {
 						try {
-							VentanaPrincipal ventana1 = new VentanaPrincipal(x,y);
+							VentanaPrincipal ventana1 = new VentanaPrincipal(x,y,intentos);
 							ventana1.inicializar();
 						} catch (Exception e) {
 							e.printStackTrace();
@@ -177,7 +181,9 @@ public class VentanaPrincipal {
 				ventana.dispose();
 			}
 		});
-	
+		/**
+		 * AÒade los listener a los botones del juego
+		 */
 		for (int i = 0; i < botonesJuego.length; i++) {
 			for (int j = 0; j < botonesJuego[i].length; j++) {
 				botonesJuego[i][j].addActionListener(new ActionBoton(i, j, juego, this));
@@ -200,8 +206,16 @@ public class VentanaPrincipal {
 	 */
 	public void mostrarNumMinasAlrededor(int i , int j) {
 		panelesJuego[i][j].removeAll();
+		
 		JLabel jl = new JLabel(""+juego.getMinasAlrededor(i, j));
-		jl.setForeground(correspondenciaColores[juego.getMinasAlrededor(i, j)]);
+		if(juego.getMinasAlrededor(i, j)<correspondenciaColores.length){
+			jl.setForeground(correspondenciaColores[juego.getMinasAlrededor(i, j)]);
+		}else{
+			jl.setForeground(correspondenciaColores[correspondenciaColores.length-1]);
+		}
+		jl.setHorizontalAlignment(JLabel.CENTER);
+		jl.setVerticalAlignment(JLabel.CENTER);
+		jl.setBorder(BorderFactory.createLineBorder(Color.BLACK));
 		panelesJuego[i][j].add(jl);
 	}
 	
@@ -213,9 +227,9 @@ public class VentanaPrincipal {
 	 */
 	public void mostrarFinJuego(boolean porExplosion) {
 		if(porExplosion) {
-			JOptionPane.showMessageDialog(ventana, "HAS PERDIDO\nHa explotado una mina\nPuntuacion: "+juego.getPuntuacion(), "Has Perdido", JOptionPane.ERROR_MESSAGE);
+			JOptionPane.showMessageDialog(ventana, "HAS PERDIDO\nHa explotado una mina\nPuntuacion: "+juego.getPuntuacion()+"\nIntentos: "+intentos, "Has Perdido", JOptionPane.ERROR_MESSAGE);
 		}else {
-			JOptionPane.showMessageDialog(ventana, "HAS GANADO\nHas completado todas las casillas\nPuntuacion: "+juego.getPuntuacion(), "Has Ganado", JOptionPane.PLAIN_MESSAGE);
+			JOptionPane.showMessageDialog(ventana, "HAS GANADO\nHas completado todas las casillas\nPuntuacion: "+juego.getPuntuacion()+"\nIntentos: "+intentos, "Has Ganado", JOptionPane.PLAIN_MESSAGE);
 		}
 	}
 
@@ -250,7 +264,14 @@ public class VentanaPrincipal {
 		ventana.setVisible(true);
 		inicializarComponentes();	
 		inicializarListeners();
-		juego.depurarTablero();
+	}
+	public void desactivaBotones() {
+		for (int i = 0; i < botonesJuego.length; i++) {
+			for (int j = 0; j < botonesJuego[i].length; j++) {
+				botonesJuego[i][j].setEnabled(false);
+			}
+		}
+		
 	}
 
 

@@ -186,7 +186,6 @@ public class ControlJuego {
 	 * @return Un entero que representa el número de minas alrededor de la celda
 	 */
 	public int getMinasAlrededor(int i, int j) {
-		System.out.println("tablero ij "+tablero[i][j]);
 		return tablero[i][j];
 	}
 
