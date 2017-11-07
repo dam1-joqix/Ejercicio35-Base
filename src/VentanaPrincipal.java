@@ -111,6 +111,7 @@ public class VentanaPrincipal {
 			e.printStackTrace();
 		}
 		icono=new ImageIcon(img.getScaledInstance(50, 50, img.SCALE_SMOOTH));
+		ventana.setIconImage(img);
 		JLabel label=new JLabel(icono);
 		panelImagen.add(label);
 		//Colocamos los componentes:
