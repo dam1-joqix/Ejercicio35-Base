@@ -66,10 +66,10 @@ public class VentanaPrincipal {
 	 * @param y posicion vertical de la ventana
 	 * @param intentos numero de veces que se ha pulsado el boton
 	 */
-	public VentanaPrincipal(int x,int y, int intentos) {
+	public VentanaPrincipal(int x,int y, int intentos,int tamx, int tamy) {
 		this.intentos=intentos;
 		ventana = new JFrame();
-		ventana.setBounds(x, y, 700, 500);
+		ventana.setBounds(x, y, tamx, tamy);
 		ventana.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		ventana.setTitle("Busca Minas");
 		juego = new ControlJuego();
@@ -188,10 +188,12 @@ public class VentanaPrincipal {
 				intentos++;
 				int x= ventana.getX();
 				int y=ventana.getY();
+				int tamx=ventana.getWidth();
+				int tamy=ventana.getHeight();
 				EventQueue.invokeLater(new Runnable() {
 					public void run() {
 						try {
-							VentanaPrincipal ventana1 = new VentanaPrincipal(x,y,intentos);
+							VentanaPrincipal ventana1 = new VentanaPrincipal(x,y,intentos,tamx,tamy);
 							ventana1.inicializar();
 						} catch (Exception e) {
 							e.printStackTrace();

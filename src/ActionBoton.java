@@ -1,9 +1,8 @@
-import java.awt.Color;
+
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
-import javax.swing.BorderFactory;
-import javax.swing.JLabel;
+
 
 /**
  * Clase que implementa el listener de los botones del Buscaminas.
@@ -41,7 +40,7 @@ public class ActionBoton implements ActionListener{
 			ventana.mostrarNumMinasAlrededor(i, j);
 			ventana.actualizarPuntuacion();
 			ventana.refrescarPantalla();
-			if(juego.getPuntuacion()==((juego.LADO_TABLERO*juego.LADO_TABLERO)-juego.MINAS_INICIALES)) {
+			if(juego.getPuntuacion()==((ControlJuego.LADO_TABLERO*ControlJuego.LADO_TABLERO)-ControlJuego.MINAS_INICIALES)) {
 				//si la puntuacion es igual a el numero de casillas menos las minas 
 				//ha acabado el juego
 				ventana.mostrarFinJuego(false);
