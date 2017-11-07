@@ -110,7 +110,7 @@ public class VentanaPrincipal {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		icono=new ImageIcon(img.getScaledInstance(50, 50, img.SCALE_SMOOTH));
+		icono=new ImageIcon(img.getScaledInstance(50, 50, Image.SCALE_SMOOTH));
 		ventana.setIconImage(img);
 		JLabel label=new JLabel(icono);
 		panelImagen.add(label);
