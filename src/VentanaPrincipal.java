@@ -1,12 +1,18 @@
-import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.EventQueue;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.GridLayout;
+import java.awt.Image;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.image.BufferedImage;
+import java.io.File;
+import java.io.IOException;
+
+import javax.imageio.ImageIO;
 import javax.swing.BorderFactory;
+import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
@@ -39,6 +45,10 @@ public class VentanaPrincipal {
 	
 	//LA VENTANA GUARDA UN CONTROL DE JUEGO:
 	ControlJuego juego;
+	
+	BufferedImage img;
+	ImageIcon icono;
+	
 	
 	
 	//Constructor, marca el tamaño y el cierre del frame
@@ -92,7 +102,17 @@ public class VentanaPrincipal {
 		panelPuntuacion.setBorder(BorderFactory.createLineBorder(Color.BLACK, 3));
 		panelJuego.setBorder(BorderFactory.createTitledBorder("Juego"));
 		
-			
+		panelImagen.setLayout(new GridLayout(1, 1));
+		
+		try {
+			img=ImageIO.read(new File("logo.jpg"));
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		icono=new ImageIcon(img.getScaledInstance(50, 50, img.SCALE_SMOOTH));
+		JLabel label=new JLabel(icono);
+		panelImagen.add(label);
 		//Colocamos los componentes:
 		//AZUL
 		GridBagConstraints settings = new GridBagConstraints();
